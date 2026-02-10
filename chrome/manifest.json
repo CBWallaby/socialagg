@@ -1,0 +1,73 @@
+{
+  "manifest_version": 3,
+  "name": "Social Feed Aggregator",
+  "version": "1.0",
+  "description": "Aggregate X, BlueSky, and Mastodon posts from open tabs",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://x.com/*",
+    "https://bsky.app/*",
+    "https://mastodon.social/*",
+    "https://mas.to/*",
+    "https://mstdn.social/*",
+    "https://fosstodon.org/*",
+    "https://hachyderm.io/*",
+    "https://mastodon.online/*",
+    "https://mastodon.world/*",
+    "https://techhub.social/*",
+    "https://infosec.exchange/*",
+    "https://fursuits.online/*",
+    "https://*.social/*"
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon.png",
+      "32": "images/icon.png",
+      "48": "images/icon.png",
+      "128": "images/icon.png"
+    },
+    "default_title": "Open Unified Feed"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "js": ["js/twitter-scraper.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://bsky.app/*"],
+      "js": ["js/bluesky-scraper.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://mastodon.social/*",
+        "https://mas.to/*",
+        "https://mstdn.social/*",
+        "https://fosstodon.org/*",
+        "https://hachyderm.io/*",
+        "https://mastodon.online/*",
+        "https://mastodon.world/*",
+        "https://techhub.social/*",
+        "https://infosec.exchange/*",
+        "https://fursuits.online/*",
+        "https://*.social/*"
+      ],
+      "js": ["js/mastodon-scraper.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  }
+}
